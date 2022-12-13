@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Navigate} from 'react-router-dom';
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 const url = `${process.env.REACT_APP_API_BASE_URL}/user/register`
 
@@ -88,12 +89,12 @@ class Register extends Component {
                         <label>Password Confirm</label>
                     </div>
 
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
-                    <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={()=>{
+                    <button className="btn-group" type="submit">Submit</button>
+                    <button className="btn-group" type="submit" onClick={()=>{
                         this.setState({
                             register: false
                         });
-                    }}>already got an account, Sign in here</button>
+                    }}>Sign in</button>
                 </form>
             </main>
         );

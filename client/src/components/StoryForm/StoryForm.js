@@ -1,45 +1,64 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Card, Form, Input, Typography, Button } from "antd";
 import FileBase64 from "react-file-base64";
 import styles from './styles';
-import { createStory, updateStory } from '../../actions/stories';
+import { getStories,createStory, updateStory } from '../../actions/stories';
 import { Layout } from "antd";
 import Menu from '../Menu';
+import { Navigate, useLocation } from 'react-router-dom';
+import { configConsumerProps } from 'antd/lib/config-provider';
+import { getUser } from '../../actions/user';
+import { redirect } from '../../actions/ui';
+import moment from 'moment'
 
 const { Sider, Content } = Layout;
 const { Title } = Typography;
 
-function StoryForm({ selectedId, setSelectedId }) {
-
-  const story = useSelector((state) => selectedId ? state.stories.find(story => story._id === selectedId) : null);
+function StoryForm () {
+  const storyId = useSelector(state => state.ui);
+  console.log(storyId)
+  const [selectedId, setSelectedId] = useState(Object.values(storyId).length === 0 ? null : storyId.selectedId);
+  const user = useSelector(state => state.user);
+  const stories = useSelector((state) => selectedId ? state.stories : [] )
+  console.log(stories)
+  const story = stories? Object.values(stories).filter(story => story._id === selectedId):null
 
   const dispatch = useDispatch();
+  //const story = useSelector((state) => selectedId ? state.stories.filter(story => story._id === selectedId) : null);
+  const [nav, setNav] = useState(false)
+  //const dispatch = useDispatch();
   const [form] = Form.useForm();
 
   const onSubmit = (formValues) => {
+    formValues.username = user.user.username
+    formValues.postDate = moment(new Date())
     selectedId ?
     dispatch(updateStory(selectedId, formValues))
     : dispatch(createStory(formValues));
-
     reset();
   };
-
+  
   useEffect(() => {
-    if(story) {
-      form.setFieldsValue(story);
-    }
-  }, [story, form]);
+    dispatch(getStories())
+    dispatch(getUser())
+  }, [dispatch]);
 
   const reset = () => {
     form.resetFields();
     setSelectedId(null);
+    dispatch(redirect(null))
+    setNav(true)
+  }
+
+  if (nav) {
+    return <Navigate to={'/'} ></Navigate>
   }
 
   return (
     <Layout>
     <Sider>
-    <Menu/>
+    <Menu user={user}/>
     </Sider>
     <Content>
     <Card
@@ -58,13 +77,12 @@ function StoryForm({ selectedId, setSelectedId }) {
         size="middle"
         onFinish={onSubmit}
       >
-        <Form.Item name="username" label="Username" rules={[{ required: true }]} >
-          <Input allowClear  />
-        </Form.Item>
+        
         <Form.Item name="caption" label="Caption" rules={[{ required: true }]} >
-          <Input.TextArea allowClear autoSize={{ minRows: 2, maxRows: 6 }} />
+          <Input.TextArea allowClear autoSize={{ minRows: 2, maxRows: 6 }} 
+          />
         </Form.Item>
-        <Form.Item name="tags" label="Tags" >
+        <Form.Item name="tags" label="Tags" rules={[{ required: true }]}>
           <Input.TextArea allowClear autoSize={{ minRows: 2, maxRows: 6 }}  />
         </Form.Item>
         <Form.Item name="image" label="Image" rules={[{ required: true }]}>
@@ -113,9 +131,9 @@ function StoryForm({ selectedId, setSelectedId }) {
       </Form>
 
     </Card>
-    </Content>
+    // </Content>
 
-    </Layout>
+    // </Layout>
   )
 }
 

@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import "../Login.css";
 import axios from 'axios';
 import {Navigate} from "react-router-dom";
+//import "bootstrap/dist/css/bootstrap.min.css";
+
 
 const Login = () => {
     const url = `${process.env.REACT_APP_API_BASE_URL}/user/login`
@@ -47,10 +49,10 @@ const Login = () => {
                     <label htmlFor="floatingPassword">Password</label>
                 </div>
 
-                <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <button className="w-100 btn btn-lg btn-primary" type="submit" onClick={()=>{
+                <button className="btn-group" type="submit">Sign in</button>
+                <button className="btn-group" type="submit" onClick={()=>{
                     setRegister(true)
-                }}>if new, Register here</button>
+                }}>Register</button>
             </form>
         </main>           
     );

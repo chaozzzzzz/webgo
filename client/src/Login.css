@@ -1,26 +1,60 @@
 .form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
 }
 
 .form-signin .checkbox {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 .form-signin .form-floating:focus-within {
-    z-index: 2;
+  z-index: 2;
 }
 
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
+.form-signin input[type='email'] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
-.form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.form-signin input[type='password'] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.btn-group {
+  background-color: #0d52f3;
+  /* Green background */
+  border: 1px solid rgb(255, 255, 255);
+  /* Green border */
+  color: white;
+  /* White text */
+  padding: 10px 24px;
+  /* Some padding */
+  cursor: pointer;
+  /* Pointer/hand icon */
+  float: left;
+  /* Float the buttons side by side */
+}
+
+.btn-group :not(:last-child) {
+  border-right: none;
+  /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+
+.btn-group:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+
+.btn-group :hover {
+  background-color: #60a8ff;
 }

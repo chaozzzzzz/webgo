@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Layout, Image, Typography } from "antd";
 import Logo from "./images/logo.png";
 import Home from './components/Home';
@@ -10,35 +11,24 @@ import Logout from './pages/Logout';
 import { Button } from "react-bootstrap";
 import axios from 'axios'
 import StoryForm from './components/StoryForm/StoryForm';
+import Menu from './components/Menu';
+import { getStories } from "./actions/stories";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
 
 const { Title } = Typography;
-const { Header, Footer } = Layout;
+const { Header, Footer, Content, Sider } = Layout;
 
 const App = () => {
-    // const [redirect, setRedirect] =  useState(false)
-    // const logoutClick = async (e) => {
-    //     e.preventDefault();
 
-    //     await axios.post('http://localhost:5001/user/logout');
-
-    //     setRedirect(true);
-    // }
-    // if(redirect) {
-    //     return <Navigate to={'/'}/>;
-    // }
     return (
         <Layout style={styles.layout}>
             <Header style={styles.header}>
                 <Image  style={styles.image} preview={false} src={Logo} width={45} />
                 &nbsp;
                 <Title  style={styles.title}>Webgo</Title>
-
-            {/* <div>
-                <Button variant="danger" onClick={logoutClick}>Logout</Button>
-            </div> */}
-      </Header>
-
-            
+            </Header>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
